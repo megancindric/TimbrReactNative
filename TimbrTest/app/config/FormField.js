@@ -1,5 +1,6 @@
 import React from "react";
 import { View, Text, TextInput, StyleSheet } from "react-native";
+import { withSafeAreaInsets } from "react-native-safe-area-context";
 
 const FormField = (props) => {
   return (

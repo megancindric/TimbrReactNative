@@ -1,4 +1,11 @@
-import { SafeAreaView, StyleSheet, Text, View, Button } from "react-native";
+import {
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  ImageBackground,
+} from "react-native";
 import React, { useState } from "react";
 import { FormData } from "../config/FormData";
 import FormField from "../config/FormField";
@@ -15,8 +22,11 @@ export default function Register() {
   };
 
   return (
-    <SafeAreaView>
-      <View>
+    <ImageBackground
+      style={styles.background}
+      source={require("../assets/loginregister.jpg")}
+    >
+      <View style={styles.formContainer}>
         <Text style={styles.titleText}>Registration Test</Text>
         <FormField
           label="Username"
@@ -53,14 +63,23 @@ export default function Register() {
         ></FormField>
         <Button title="Register" onPress={testRegister}></Button>
       </View>
-    </SafeAreaView>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
+  background: {
+    flex: 1, //Image will fill entire screen
+    alignItems: "center",
+  },
   container: {
     display: "flex",
     margin: 20,
+  },
+  formContainer: {
+    backgroundColor: "white",
+    opacity: 0.55,
+    padding: 25,
   },
   formText: {
     fontSize: 20,
@@ -72,7 +91,7 @@ const styles = StyleSheet.create({
     paddingTop: 30,
   },
   titleText: {
-    fontSize: 24,
+    fontSize: 32,
     textAlign: "center",
     fontWeight: "300",
     paddingBottom: 30,

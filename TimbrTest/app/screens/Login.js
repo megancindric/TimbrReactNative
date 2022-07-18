@@ -5,6 +5,7 @@ import {
   TextInput,
   View,
   Button,
+  ImageBackground,
 } from "react-native";
 import React, { useState } from "react";
 import { FormData } from "../config/FormData";
@@ -19,11 +20,13 @@ export default function Login() {
     console.log(formValues);
   };
   return (
-    <SafeAreaView>
-      <View>
+    <ImageBackground
+      style={styles.background}
+      source={require("../assets/loginregister.jpg")}
+    >
+      <View style={styles.formContainer}>
         <Text style={styles.titleText}>Login Test</Text>
-      </View>
-      <View>
+
         <FormField
           label="Username"
           formKey="username"
@@ -41,14 +44,23 @@ export default function Login() {
         ></FormField>
         <Button title="Login" onPress={testLogin}></Button>
       </View>
-    </SafeAreaView>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
+  background: {
+    flex: 1, //Image will fill entire screen
+    alignItems: "center",
+  },
   container: {
     display: "flex",
     margin: 20,
+  },
+  formContainer: {
+    backgroundColor: "white",
+    opacity: 0.55,
+    padding: 25,
   },
   formText: {
     fontSize: 20,
@@ -60,9 +72,8 @@ const styles = StyleSheet.create({
     paddingTop: 30,
   },
   titleText: {
-    fontSize: 24,
+    fontSize: 32,
     textAlign: "center",
     fontWeight: "300",
-    paddingBottom: 30,
   },
 });
