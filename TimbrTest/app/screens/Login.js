@@ -7,17 +7,34 @@ import {
   Button,
   ImageBackground,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { FormData } from "../config/FormData";
 import FormField from "../config/FormField";
+import * as SecureStore from "expo-secure-store";
+import { AxiosContext } from "../context/AxiosContext";
+import { AuthContext } from "../context/AuthContext";
 
 export default function Login() {
   const [formValues, handleFormValueChange, setFormValues] = FormData({
     username: "",
     password: "",
   });
-  const testLogin = () => {
-    console.log(formValues);
+  const authContext = useContext(AuthContext);
+  const { publicAxios } = useContext(AxiosContext);
+  const loginUser = async () => {
+    try {
+      const response = await publicAxios.post("auth/login/", formValues);
+      if (response.status === 201) {
+        console.log("Login Successful!");
+        await SecureStore.setItemAsync("token", response.data.access);
+        setAuthState({
+          accessToken: response.data.access,
+          authenticated: true,
+        });
+      }
+    } catch (error) {
+      console.log(`Login Error: ${error}`);
+    }
   };
   return (
     <ImageBackground
@@ -42,7 +59,7 @@ export default function Login() {
           }}
           handleFormValueChange={handleFormValueChange}
         ></FormField>
-        <Button title="Login" onPress={testLogin}></Button>
+        <Button title="Login" onPress={loginUser}></Button>
       </View>
     </ImageBackground>
   );

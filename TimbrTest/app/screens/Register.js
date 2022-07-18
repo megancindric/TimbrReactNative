@@ -6,9 +6,13 @@ import {
   Button,
   ImageBackground,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { FormData } from "../config/FormData";
 import FormField from "../config/FormField";
+import axios from "axios";
+import { AuthContext } from "../context/AuthContext";
+import { AxiosContext } from "../context/AxiosContext";
+
 export default function Register() {
   const [formValues, handleFormValueChange, setFormValues] = FormData({
     username: "",
@@ -17,8 +21,17 @@ export default function Register() {
     first_name: "",
     last_name: "",
   });
-  const testRegister = () => {
-    console.log(formValues);
+  const authContext = useContext(AuthContext);
+  const { publicAxios } = useContext(AxiosContext);
+  const testRegister = async () => {
+    try {
+      const response = await publicAxios.post("auth/register/", formValues);
+      if (response.status === 201) {
+        console.log("Registration Successful!  Try logging in!");
+      }
+    } catch (error) {
+      console.log(`Registration Failure: ${error}`);
+    }
   };
 
   return (

@@ -14,4 +14,4 @@ const Root = () => {
     </AuthProvider>
   );
 };
-export default registerRootComponent(Root);
+registerRootComponent(Root);
