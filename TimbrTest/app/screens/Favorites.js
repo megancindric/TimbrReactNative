@@ -11,7 +11,7 @@ import { AuthContext } from "../context/AuthContext";
 
 import colors from "../config/colors.js";
 
-export default function Dashboard({ navigation }) {
+export default function Favorites({ navigation }) {
   const authContext = useContext(AuthContext);
 
   const logout = async () => {

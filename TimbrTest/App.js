@@ -1,14 +1,10 @@
-import WelcomeScreen from "./app/screens/WelcomeScreen";
 import { NavigationContainer, StackActions } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { AuthContext } from "./app/context/AuthContext";
 import * as SecureStore from "expo-secure-store";
+import { AppStack, AuthStack } from "./app/stacks/stacks";
 
-import Kirby from "./app/Kirby";
-import Login from "./app/screens/Login";
-import Register from "./app/screens/Register";
-import Dashboard from "./app/screens/Dashboard";
 import Loader from "./app/config/Loader";
 
 const Stack = createNativeStackNavigator();
@@ -46,20 +42,11 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        {authContext?.authState?.authenticated === false ? (
-          <>
-            <Stack.Screen name="Welcome" component={WelcomeScreen} />
-            <Stack.Screen name="Login" component={Login} />
-            <Stack.Screen name="Register" component={Register} />
-          </>
-        ) : (
-          <>
-            <Stack.Screen name="Dashboard" component={Dashboard} />
-            <Stack.Screen name="Kirby" component={Kirby} />
-          </>
-        )}
-      </Stack.Navigator>
+      {authContext?.authState?.authenticated === false ? (
+        <AppStack />
+      ) : (
+        <AuthStack />
+      )}
     </NavigationContainer>
   );
 }
