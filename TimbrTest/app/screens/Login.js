@@ -24,10 +24,10 @@ export default function Login() {
   const loginUser = async () => {
     try {
       const response = await publicAxios.post("auth/login/", formValues);
-      if (response.status === 201) {
+      if (response.status === 200) {
         console.log("Login Successful!");
         await SecureStore.setItemAsync("token", response.data.access);
-        setAuthState({
+        authContext.setAuthState({
           accessToken: response.data.access,
           authenticated: true,
         });

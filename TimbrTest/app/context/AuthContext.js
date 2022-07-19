@@ -10,7 +10,7 @@ const AuthProvider = ({ children }) => {
     authenticated: false,
   });
   const logout = async () => {
-    await SecureStore.setItemAsync("token", null);
+    await SecureStore.deleteItemAsync("token");
     setAuthState({
       accessToken: null,
       authenticated: false,

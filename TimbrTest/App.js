@@ -44,10 +44,6 @@ export default function App() {
     return <Loader />;
   }
 
-  if (authContext?.authState?.authenticated === false) {
-  } else {
-  }
-
   return (
     <NavigationContainer>
       <Stack.Navigator>
