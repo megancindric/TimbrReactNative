@@ -4,33 +4,50 @@ import {
   Text,
   View,
   TouchableOpacity,
-  Pressable,
 } from "react-native";
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { AxiosContext } from "../context/AxiosContext";
 import { AuthContext } from "../context/AuthContext";
 
 import colors from "../config/colors.js";
 
 export default function Favorites({ navigation }) {
   const authContext = useContext(AuthContext);
+  const { authAxios } = useContext(AxiosContext);
+  const [trees, setTrees] = useState([]);
 
-  const logout = async () => {
-    console.log("Logged Out!");
-    await authContext.logout();
+  useEffect(() => {
+    getFavorites();
+  }, []);
+
+  const getFavorites = async () => {
+    try {
+      const response = await authAxios.get("auth/userinfo/");
+      if (response.status === 200) {
+        console.log("getFavorites Successful!");
+        console.log(response.data);
+        setTrees(response.data.favorites);
+      }
+    } catch (error) {
+      console.log(`getFavorites Error: ${error}`);
+    }
   };
+
   return (
     <ImageBackground
       style={styles.background}
-      source={require("../assets/dashboard.jpg")}
+      source={require("../assets/favorites.jpg")}
     >
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button} onPress={logout}>
-          <Text style={styles.buttonText}>Log Out</Text>
-        </TouchableOpacity>
-      </View>
+      <View style={styles.buttonContainer}></View>
       <View style={styles.logoContainer}>
-        <Text style={styles.logoText}>Dashboard</Text>
+        <Text style={styles.logoText}>Favorites</Text>
       </View>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.goBack()}
+      >
+        <Text style={styles.buttonText}>Back</Text>
+      </TouchableOpacity>
     </ImageBackground>
   );
 }

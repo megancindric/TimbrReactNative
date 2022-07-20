@@ -23,13 +23,23 @@ export default function Dashboard({ navigation }) {
       style={styles.background}
       source={require("../assets/dashboard.jpg")}
     >
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button} onPress={logout}>
-          <Text style={styles.buttonText}>Log Out</Text>
-        </TouchableOpacity>
-      </View>
       <View style={styles.logoContainer}>
         <Text style={styles.logoText}>Dashboard</Text>
+      </View>
+      <View style={styles.buttonContainer}>
+        <View>
+          <TouchableOpacity style={styles.button} onPress={logout}>
+            <Text style={styles.buttonText}>Log Out</Text>
+          </TouchableOpacity>
+        </View>
+        <View>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => navigation.navigate("Favorites")}
+          >
+            <Text style={styles.buttonText}>Favorites</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </ImageBackground>
   );
@@ -38,7 +48,6 @@ export default function Dashboard({ navigation }) {
 const styles = StyleSheet.create({
   background: {
     flex: 1, //Image will fill entire screen
-    justifyContent: "flex-end",
     alignItems: "center",
   },
   button: {
@@ -51,9 +60,9 @@ const styles = StyleSheet.create({
     backgroundColor: colors.secondary,
   },
   buttonContainer: {
-    position: "absolute",
-    top: 75,
     alignItems: "center",
+    flexDirection: "column",
+    flex: 1,
   },
   buttonText: {
     fontSize: 16,
@@ -63,9 +72,9 @@ const styles = StyleSheet.create({
     color: colors.primary,
   },
   logoContainer: {
-    position: "absolute",
-    top: 100,
     alignItems: "center",
+    flexDirection: "column",
+    flex: 1,
   },
   logoText: {
     color: colors.secondary,
